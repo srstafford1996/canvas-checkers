@@ -1,0 +1,12 @@
+{
+  "name": "checkers-canvas-demo",
+  "version": "0.0.1",
+  "description": "Because why not",
+  "author": "Stephen Stafford",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.13.1"
+  }
+}
