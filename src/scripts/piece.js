@@ -29,4 +29,8 @@ var GAME_PIECE = function(initX, initY, color){
         ctx.stroke(path);
     }
 
+    this.clicked = function(gamestate){
+        console.log('Square (' + this.x + ', ' + this.y + ') has been clicked');
+    }
+
 };
