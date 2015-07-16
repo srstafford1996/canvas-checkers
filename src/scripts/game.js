@@ -25,7 +25,7 @@ var GameManager = function(){
 
                 if(j < 3)                           //ALL RED PIECES
                     new_square_state = STATE.RED;
-                else if(j > this.boardSize - 3)     //ALL BLACK PIECES
+                else if(j >= this.boardSize - 3)     //ALL BLACK PIECES
                     new_square_state = STATE.BLACK;
             }
             //Empty slots
