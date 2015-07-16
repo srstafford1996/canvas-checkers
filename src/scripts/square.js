@@ -1,4 +1,10 @@
 
+var SQUARE_STATE = {
+    EMPTY: 0,
+    P1: 1,
+    P2: 2
+};
+
 var GAME_SQUARE = function(x, y, color, squareWidth, state){
 
     //EMPTY || RED || BLACK
@@ -35,8 +41,8 @@ GAME_SQUARE.prototype.draw = function(ctx){
         var circle = new Path2D();
         circle.arc(x_position, y_position, radius, 0, Math.PI * 2, false);
 
-        if(this.state == 1) ctx.fillStyle = 'rgb(200, 0, 0)';           //COLOR RED PIECE
-        else if(this.state == 2) ctx.fillStyle = 'rgb(100, 100, 100)';  //COLOR BLACK PIECE
+        if(this.state == SQUARE_STATE.P1) ctx.fillStyle = 'rgb(200, 0, 0)';           //COLOR RED PIECE
+        else if(this.state == SQUARE_STATE.P2) ctx.fillStyle = 'rgb(100, 100, 100)';  //COLOR BLACK PIECE
 
         ctx.fill(circle);   //DRAW PIECE
         ctx.stroke(circle); //DRAW OUTLINE
@@ -46,5 +52,5 @@ GAME_SQUARE.prototype.draw = function(ctx){
 
 GAME_SQUARE.prototype.clicked = function(gamestate){
     //TODO: SQUARE CLICKED STUFF
-    console.log('GAME_SQUARE(' + this.x + ', ' + this.y + ') has been clicked on.');
+    
 };
