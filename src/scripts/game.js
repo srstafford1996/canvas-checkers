@@ -1,5 +1,5 @@
 
-Colors = {
+STATE = {
     EMPTY: 0,
     RED: 1,
     BLACK: 2
@@ -15,16 +15,21 @@ var GameManager = function(){
     for(var i = 0; i < this.boardSize; i++){
         this.gamestate[i] = [];
         for(j = 0; j < this.boardSize; j++){
-            
-            //Red pieces
-            if(j < 3 && ((i+j)%2 == 0))
-                this.gamestate[i][j] = new GAME_PIECE(i, j, Colors.RED);
-            //Black pieces
-            else if(j >= this.boardSize - 3 && ((i+j)%2 == 0))
-                this.gamestate[i][j] = new GAME_PIECE(i, j, Colors.BLACK);
+
+            var new_square_state = STATE.EMPTY;     //EMPTY SQUARE
+            var new_square_color = 'rgb(0, 0, 0)';  //BLACK SQUARE
+
+
+            if( (i+j) % 2 == 0 ){                   //ALL PLAYABLE SQUARES
+                new_square_color = 'rgb(255, 255, 255)';    //They're all white. This code is pretty racist.
+
+                if(j < 3)                           //ALL RED PIECES
+                    new_square_state = STATE.RED;
+                else if(j > this.boardSize - 3)     //ALL BLACK PIECES
+                    new_square_state = STATE.BLACK;
+            }
             //Empty slots
-            else
-                this.gamestate[i][j] = Colors.EMPTY;
+            this.gamestate[i][j] = new GAME_SQUARE(i, j, new_square_color, this.squareWidth, new_square_state);
         }
     }
 
@@ -37,43 +42,23 @@ var GameManager = function(){
         var x =  Math.floor( (event.pageX - parentscope.canvas.offsetLeft) / parentscope.squareWidth )
         var y = Math.floor( (event.pageY - parentscope.canvas.offsetTop) / parentscope.squareWidth )
 
-        if(parentscope.gamestate[x][y] != Colors.EMPTY)
-            parentscope.gamestate[x][y].clicked(parentscope.gamestate);
+        parentscope.gamestate[x][y].clicked(parentscope.gamestate);
     });
 };
 
 //Draw checkerboard
 GameManager.prototype.drawBoard = function(){
 
-    for(var i = 0; i < this.boardSize; i++){
-        for(var j = 0; j < this.boardSize; j++){
-            //Alternate square color
-            if( (i+j)%2 == 1 )                  
-                this.ctx.fillStyle = "rgb(0, 0, 0)";
-            else                                
-                this.ctx.fillStyle = "rgb(255, 255, 255)"; 
-
-            //Draw square
-            this.ctx.fillRect( j * this.squareWidth, i * this.squareWidth, this.squareWidth, this.squareWidth);
-
-        }
-    }
-}
-
-//Draw pieces
-GameManager.prototype.drawPieces = function(){
-    
-    
-    var parentscope = this; //Gotta do this because javascript
+    var parentscope = this; //JAVASCRIPT INTENSIFIES
 
     this.gamestate.forEach(function(element){
-        element.forEach(function(element){
-            if(element != Colors.EMPTY)
-                element.draw(parentscope.squareWidth, parentscope.ctx);
+        element.forEach(function(element2){
+            element2.draw(parentscope.ctx);
         });
     });
-};
+
+}
+
 
 var GM = new GameManager();
 GM.drawBoard();
-GM.drawPieces();
